@@ -15,7 +15,11 @@ Stability
 -------------
 This being the most important feature for backup software, note that most of the stability comes from rsync, rdiff-backup, etc., which are considered very stable, because sibt never touches data itself but only integrates existing solutions and adding checks on top.
 
-It is production-ready, I use it every day and have restored a broken HDD with it.
+It is production-ready, I use it every day, backup and restore work as they should. Cloning Linux installations from backup is possible without a sweat with
+ 
+ ::
+
+   sibt restore / <version>
 
 Documentation
 -------------
@@ -26,10 +30,17 @@ Installation
 
 Archlinux AUR
 ^^^^^^^^^^^^^^
-There is a PKGBUILD available here:
+There is a PKGBUILD available here: https://aur.archlinux.org/packages/sibt-git/.
 
-Alternatively, it is easy to just clone and the git repo and run [setuptools]. The master branch is considered 'stable' at all times.
+From Git
+^^^^^^^^^
+Alternatively, it is easy to just clone the git repo and run install. The master branch is considered 'stable' at all times.
 
+::
+
+  git clone https://github.com/pid0/sibt
+  cd sibt
+  paver install
 
 License
 -----------
