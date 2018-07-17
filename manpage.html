@@ -1,0 +1,242 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sibt – A configurable interface to existing backup tools. &#8212; sibt 0.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="sibt – Simple Backup Tool" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sibt-a-configurable-interface-to-existing-backup-tools">
+<h1>sibt – A configurable interface to existing backup tools.<a class="headerlink" href="#sibt-a-configurable-interface-to-existing-backup-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="synopsis">
+<h2>SYNOPSIS<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sibt</span> <span class="p">[</span><span class="n">options</span><span class="o">...</span><span class="p">]</span> <span class="nb">list</span> <span class="nb">all</span><span class="o">|</span><span class="n">rules</span><span class="o">|</span><span class="n">schedulers</span><span class="o">|</span><span class="n">synchronizers</span>
+
+<span class="n">sibt</span> <span class="p">[</span><span class="n">options</span><span class="o">...</span><span class="p">]</span> <span class="n">show</span><span class="o">|</span><span class="n">check</span><span class="o">|</span><span class="n">schedule</span> <span class="o">&lt;</span><span class="n">rule</span><span class="o">-</span><span class="n">patterns</span><span class="o">...&gt;</span>
+
+<span class="n">sibt</span> <span class="p">[</span><span class="n">options</span><span class="o">...</span><span class="p">]</span> <span class="n">versions</span><span class="o">-</span><span class="n">of</span> <span class="o">&lt;</span><span class="n">file</span><span class="o">&gt;</span>
+
+<span class="n">sibt</span> <span class="p">[</span><span class="n">options</span><span class="o">...</span><span class="p">]</span> <span class="n">restore</span> <span class="p">[</span><span class="o">--</span><span class="n">to</span> <span class="o">&lt;</span><span class="n">destination</span><span class="o">&gt;</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">file</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">version</span><span class="o">-</span><span class="n">substrings</span><span class="o">&gt;</span>
+
+<span class="n">sibt</span> <span class="p">[</span><span class="n">options</span><span class="o">...</span><span class="p">]</span> <span class="nb">list</span><span class="o">-</span><span class="n">files</span> <span class="p">[</span><span class="o">--</span><span class="n">null</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">recursive</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">file</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">version</span><span class="o">-</span><span class="n">substrings</span><span class="o">...&gt;</span>
+
+<span class="n">sibt</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="description">
+<h2>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>sibt (simple backup tool) is a Python program that strives to integrate many
+well-established backup tools by providing a common configuration format and
+command line interface. It works with the notion of a <a class="reference internal" href="#SyncRule" title="SyncRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">SyncRule</span></code></a>.
+For example, if you want to schedule regular backups of your entire system,
+which you decide should be compressed and then sent to a remote server, you
+define one of these rules.</p>
+<dl class="class">
+<dt id="SyncRule">
+<em class="property">class </em><code class="descname">SyncRule</code><a class="headerlink" href="#SyncRule" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="SyncRule.Synchronizer">
+<code class="descname">Synchronizer</code><a class="headerlink" href="#SyncRule.Synchronizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A synchronizer is an external program that copies data from locations to other locations
+so if files are lost at one of them, it can be restored from the others.
+Currently available synchronizers are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>rsync</li>
+<li>rdiff-backup</li>
+<li>tar</li>
+<li>duplicity</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="SyncRule.Scheduler">
+<code class="descname">Scheduler</code><a class="headerlink" href="#SyncRule.Scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>A scheduler is responsible for deciding when to execute a rule and for preparing the environment
+a synchronizer will run in, like ensuring that e.g., rsync will never be run twice with the same arguments in parallel.
+Currently available schedulers are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>anacron</li>
+<li>A simple interval-based scheduler</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="SyncRule.Loc1">
+<code class="descname">Loc1</code><a class="headerlink" href="#SyncRule.Loc1" title="Permalink to this definition">¶</a></dt>
+<dd><p>A location is a local file path or a remote URL that the synchronizer can
+work with.
+The number of required locations is given by type of operation performed by
+the synchronizer.
+For example, rsync needs two locations and copies from the first to the second.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="SyncRule.Loc2">
+<code class="descname">Loc2</code><a class="headerlink" href="#SyncRule.Loc2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p>Rules are declared as files with an ini-like syntax. The example could be defined with the following file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#import TarFullSystemBackup</span>
+
+<span class="n">_destination</span> <span class="o">=</span> <span class="n">pcbackup</span><span class="nd">@server</span><span class="p">:</span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">backup</span>
+<span class="n">_excludeAlso</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">local</span>
+
+<span class="p">[</span><span class="n">Scheduler</span><span class="p">]</span>
+<span class="n">Name</span> <span class="o">=</span> <span class="n">anacron</span>
+<span class="n">Interval</span> <span class="o">=</span> <span class="mi">3</span> <span class="n">days</span>
+
+<span class="p">[</span><span class="n">Synchronizer</span><span class="p">]</span>
+<span class="n">RemoteShellCommand</span> <span class="o">=</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">pc</span><span class="o">-</span><span class="n">backup</span><span class="o">/</span><span class="n">id_ed25519</span>
+</pre></div>
+</div>
+<div class="section" id="advantages-over-custom-shell-scripts-run-with-cron">
+<h3>Advantages over custom shell scripts run with cron.<a class="headerlink" href="#advantages-over-custom-shell-scripts-run-with-cron" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Extensive test suite ensuring that backup and restore operations work correctly in all
+circumstances.</li>
+<li>Minimally surprising command line interface. For example, sibt restore has the same
+semantics as the traditional UNIX cp command. It is not necessary to remember syntactic quirks
+like the meaning of trailing slashes in an rsync command line.</li>
+<li>sibt still does not eve* touch the contents of any of your files itself but
+relies on the synchronizers instead which, like rsync, have a</li>
+<li>Swapping out backup programs is relatively easy due to the common interface.</li>
+<li>Sibt performs many checks to make sure backup rules do what a user is likely
+to expect from them. For instance, two rules are never allowed to write to the same
+location, or a rule may not write to a location another one reads. This works also
+for remote URLs. Configuration values have data types that are syntax checked.</li>
+<li>Sibt leaves it to the scheduler to actually execute a rule but it replicates
+critical pieces of infrastructure like logging and employs a locking mechanism
+to prevent rules from being run twice.</li>
+<li>It is a stated design goal to keep metadata, data, and logs in an uncorrupted state even after a power outage.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="advantages-over-database-based-solutions">
+<h3>Advantages over database-based solutions.<a class="headerlink" href="#advantages-over-database-based-solutions" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Very lightweight. Extensible with dependencies.</li>
+<li>Simple to set up as an unprivileged user as well as root. A full system backup
+configuration is only a few lines long.</li>
+<li>Possible to write backups to a variety of cloud servers using duplicity.</li>
+<li>rsync and rdiff-backup mirror their locations which means the backup requires no
+special software to access in these cases. GNU Tar is also an extremely stable format.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="files">
+<h2>FILES<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<p><strong>/etc/sibt/rules</strong> For system-wide rule declarations.</p>
+<p><strong>/var/lib/sibt</strong></p>
+<p><strong>~/.sibt/config/rules</strong> For user-specific rule declarations.</p>
+<p><strong>~/.sibt/var</strong></p>
+</div>
+<div class="section" id="author">
+<h2>AUTHOR<a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h2>
+<p>Patrick Plagwitz &lt;<a class="reference external" href="mailto:patrick_plagwitz&#37;&#52;&#48;web&#46;de">patrick_plagwitz<span>&#64;</span>web<span>&#46;</span>de</a>&gt;</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sibt – A configurable interface to existing backup tools.</a><ul>
+<li><a class="reference internal" href="#synopsis">SYNOPSIS</a></li>
+<li><a class="reference internal" href="#description">DESCRIPTION</a><ul>
+<li><a class="reference internal" href="#advantages-over-custom-shell-scripts-run-with-cron">Advantages over custom shell scripts run with cron.</a></li>
+<li><a class="reference internal" href="#advantages-over-database-based-solutions">Advantages over database-based solutions.</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#files">FILES</a></li>
+<li><a class="reference internal" href="#author">AUTHOR</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">sibt – Simple Backup Tool</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/manpage.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Patrick Plagwitz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/manpage.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
